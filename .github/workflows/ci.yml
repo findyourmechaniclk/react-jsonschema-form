@@ -14,6 +14,7 @@ jobs:
   # failure that has an automatic fix is never hidden behind the slowest step.
   checks:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
       # The deploy job runs only on main and takes its artifacts from the build leg matching `.nvmrc`, so a `.nvmrc`
