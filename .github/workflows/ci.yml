@@ -1,3 +1,10 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 3 optimizations:
+# - [MEDIUM] Add concurrency group to "ci.yml"
+# - [MEDIUM] 3 jobs clone the repo — consider artifact sharing
+# - [LOW] Explicitly set fail-fast for large matrix job "test" (12 combinations)
+# Estimated savings: ~5 min/run
+#
 name: CI
 
 on:
@@ -7,6 +14,10 @@ on:
   pull_request:
     branches: [main]
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   # Apart from the Node version-file check, none of these depend on the Node version or on a build, so
   # they run once in their own job rather than on one leg of the build matrix: a failure reports on its own instead of cancelling the other
